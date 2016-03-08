@@ -10,8 +10,14 @@ if [SYSTEM = "Linux"] ; then
 fi
 
 # Back-up
-mv ~/.vim ~/vimbak
-mv ~/.vimrc ~/.vimrc.bak
+if [ -d ~/.vim ] ; then
+    mv ~/.vim ~/vimbak;
+fi
+
+if [ -f ~/.vimrc ] ; then
+    mv ~/.vimrc ~/.vimrc.bak
+fi
+
 git clone https://github.com/h1994st/vim-conf.git ~/.vim
 
 # Clone Vundle.vim
