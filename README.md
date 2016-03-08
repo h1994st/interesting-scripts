@@ -5,5 +5,23 @@ Interesting Scripts
 
 Some useful shell scripts for me...
 
-To be continued...
+## Usage
+
+#### Install Nginx
+
+```bash
+./install-nginx.sh <nginx version number>  # e.g. ./install-nginx.sh 1.9.12
+```
+
+#### Configure Vim
+
+Only for Ubuntu Linux user
+
+```bash
+./sync-vim-conf.sh
+```
+
+or see [this repo](https://github.com/h1994st/vim-conf)
+
+(To be continued...)
 
