@@ -4,7 +4,7 @@ set -e;
 
 # Install dependencies
 SYSTEM=`uname -s`
-if [SYSTEM = "Linux"] ; then
+if [ $SYSTEM = "Linux" ] ; then
     echo "Linux"
     sudo apt-get install git vim ctags
 fi
