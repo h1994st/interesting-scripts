@@ -10,7 +10,10 @@ Some useful shell scripts for me...
 #### Install Nginx
 
 ```bash
-./install-nginx.sh <nginx version number>  # e.g. ./install-nginx.sh 1.9.12
+./install-nginx.sh [nginx version number]
+
+# e.g.
+./install-nginx.sh 1.9.12
 ```
 
 #### Configure Vim
