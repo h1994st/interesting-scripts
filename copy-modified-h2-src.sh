@@ -4,26 +4,51 @@ set -e;
 
 function usage()
 {
-    echo 'USAGE: '$0' <firefox_source_root_dir_path>'
+    echo 'USAGE: '$0' <command> [...]';
+    echo '';
+    echo 'COMMANDS:';
+    echo '    install <src dir path>      Copy files to firefox source code directory';
+    echo '    config                      Generate configuration file';
 }
 
-if [ $# != 1 ] ; then
-    echo 'Too few arguments!'
+if [ $# -lt 1 ] ; then
+    echo 'Too few arguments!';
     usage;
     exit 1;
 fi
 
-if [ ! -d $1 ] && [ ! -d $1'/network/protocol/http' ] ; then
-    echo 'Invalid path!'
+if [ $# -gt 2 ] ; then
+    echo 'Too many arguments!';
     usage;
     exit 1;
 fi
 
-dest_root_dir=$1
-dest_http_protocol_dir=$1'/network/protocol/http'
+if [ $1 != 'install' ] && [ $1 != 'config' ] ; then
+    echo 'Invalid command!';
+    usage;
+    exit 1;
+fi
 
-cp mozconfig $dest_root_dir
-cp *.cpp *.h moz.build $dest_http_protocol_dir
+if [ $1 = 'install' ] && [ $# -eq 1 ] ; then
+    echo 'Too few arguments!';
+    usage;
+    exit 1;
+fi
+
+if [ $1 = 'install' ] && [ $# -eq 2 ] ; then
+    dest_root_dir=$2;
+    dest_http_protocol_dir=$2'/netwerk/protocol/http/';
+
+    if [ ! -d $dest_root_dir ] || [ ! -d $dest_http_protocol_dir ] ; then
+        echo 'Invalid path!';
+        usage;
+        exit 1;
+    fi
+
+    cp mozconfig $dest_root_dir;
+    cp *.cpp *.h moz.build $dest_http_protocol_dir;
+elif [ $1 = 'config' ] ; then
+    cp mozconfig.example mozconfig;
+fi
 
 echo 'Done!'
-
