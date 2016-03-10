@@ -14,21 +14,27 @@ if [ $# != 1 ] ; then
     exit 1;
 fi
 
-OPENSSL_SRC_DIR="openssl-1.0.2d"
-ZLIB_SRC_DIR="zlib-1.2.8"
+OPENSSL_VERSION="1.0.2g"
+ZLIB_VERSION="1.2.8"
+
+OPENSSL_SRC_DIR="openssl-${OPENSSL_VERSION}"
+ZLIB_SRC_DIR="zlib-${ZLIB_VERSION}"
 NGX_HTTP_FILTER_MODULE="ngx_http_substitutions_filter_module"
 NGINX_SRC_DIR="nginx-"$1
 
 # Dependencies
+
+sudo apt-get install build-essential libxslt1-dev libgd2-xpm-dev libgeoip-dev libpcre3 libpcre3-dev || (echo "Error" && exit 1);
+
 if [ ! -d $OPENSSL_SRC_DIR ] ; then
     echo "Downloading openssl source code..."
-    wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2d.tar.gz && tar xf openssl-1.0.2d.tar.gz && rm openssl-1.0.2d.tar.gz || (echo "Error" && exit 1);
+    wget https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz && tar xf openssl-${OPENSSL_VERSION}.tar.gz || (echo "Error" && exit 1);
     echo "Done!"
 fi
 
 if [ ! -d $ZLIB_SRC_DIR ] ; then
     echo "Downloading zlib source code..."
-    wget http://zlib.net/zlib-1.2.8.tar.gz && tar xf zlib-1.2.8.tar.gz && rm zlib-1.2.8.tar.gz || (echo "Error" && exit 1);
+    wget http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz && tar xf zlib-${ZLIB_VERSION}.tar.gz || (echo "Error" && exit 1);
     echo "Done!"
 fi
 
@@ -41,7 +47,7 @@ fi
 # NGINX source code
 if [ ! -d $NGINX_SRC_DIR ] ; then
     echo "Downloading nginx "$1" source code..."
-    wget http://nginx.org/download/nginx-${1}.tar.gz && tar xzf nginx-${1}.tar.gz && rm nginx-${1}.tar.gz || (echo "Error" && exit 1);
+    wget http://nginx.org/download/nginx-${1}.tar.gz && tar xzf nginx-${1}.tar.gz || (echo "Error" && exit 1);
     echo "Done!"
 fi
 
@@ -84,17 +90,17 @@ echo "Configuring...";
 --with-http_sub_module \
 --with-zlib=../$ZLIB_SRC_DIR \
 --with-openssl=../$OPENSSL_SRC_DIR \
---add-module=../$NGX_HTTP_FILTER_MODULE || (echo "Configure error");
+--add-module=../$NGX_HTTP_FILTER_MODULE || (echo "Configure error" && exit 1);
 echo "Done!";
 
 echo "";
 echo "Compiling...";
-make || (echo "Compile error");
+make || (echo "Compile error" && exit 1);
 echo "Done!";
 
 echo "";
 echo "Installing...";
-sudo make install || (echo "Install error");
+sudo make install || (echo "Install error" && exit 1);
 echo "Done!";
 nginx -v;
 
@@ -102,7 +108,11 @@ sudo service nginx restart;
 
 echo "Exit directory "$NGINX_SRC_DIR:
 cd ..;
-echo "Deleting nginx source code..."
+echo "Cleaning..."
 rm -rf $NGINX_SRC_DIR;
+rm -rf $ZLIB_SRC_DIR;
+rm -rf $OPENSSL_SRC_DIR;
+rm -rf $NGX_HTTP_FILTER_MODULE;
+rm *.tar.gz;
 echo "Done!";
 
