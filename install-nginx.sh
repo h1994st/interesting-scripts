@@ -22,7 +22,7 @@ NGINX_SRC_DIR="nginx-"$1
 # Dependencies
 if [ ! -d $OPENSSL_SRC_DIR ] ; then
     echo "Downloading openssl source code..."
-    wget https://www.openssl.org/source/openssl-1.0.2d.tar.gz && tar xf openssl-1.0.2d.tar.gz && rm openssl-1.0.2d.tar.gz || (echo "Error" && exit 1);
+    wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2d.tar.gz && tar xf openssl-1.0.2d.tar.gz && rm openssl-1.0.2d.tar.gz || (echo "Error" && exit 1);
     echo "Done!"
 fi
 
