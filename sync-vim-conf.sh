@@ -14,12 +14,8 @@ if [ -d $HOME/.vim ] ; then
     mv $HOME/.vim $HOME/vimbak;
 fi
 
-if [ -f $HOME/.vimrc ] ; then
+if [ -e $HOME/.vimrc ] ; then
     mv $HOME/.vimrc $HOME/.vimrc.bak
-fi
-
-if [ -h $HOME/.vimrc ] ; then
-    rm -f $HOME/.vimrc
 fi
 
 git clone https://github.com/h1994st/vim-conf.git $HOME/.vim
