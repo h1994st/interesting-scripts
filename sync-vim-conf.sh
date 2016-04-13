@@ -20,6 +20,8 @@ fi
 
 git clone https://github.com/h1994st/vim-conf.git ~/.vim
 
+ln -s $HOME/.vim/vimrc $HOME/.vimrc
+
 # Clone Vundle.vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
