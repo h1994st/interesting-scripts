@@ -14,7 +14,7 @@ if [ -d $HOME/.vim ] ; then
     mv $HOME/.vim $HOME/vimbak;
 fi
 
-if [ -e $HOME/.vimrc ] ; then
+if [ -L $HOME/.vimrc ] || [ -h $HOME/.vimrc ] ; then
     mv $HOME/.vimrc $HOME/.vimrc.bak
 fi
 
