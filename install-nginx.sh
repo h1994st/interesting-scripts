@@ -104,7 +104,8 @@ sudo make install || (echo "Install error" && exit 1);
 echo "Done!";
 nginx -v;
 
-sudo service nginx restart;
+# sudo service nginx restart;
+sudo nginx -s reload;
 
 echo "Exit directory "$NGINX_SRC_DIR:
 cd ..;
