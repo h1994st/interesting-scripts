@@ -10,18 +10,20 @@ if [ $SYSTEM = "Linux" ] ; then
 fi
 
 # Back-up
-if [ -d ~/.vim ] ; then
-    mv ~/.vim ~/vimbak;
+if [ -d $HOME/.vim ] ; then
+    mv $HOME/.vim $HOME/vimbak;
 fi
 
-if [ -f ~/.vimrc ] ; then
-    mv ~/.vimrc ~/.vimrc.bak
+if [ -L $HOME/.vimrc ] || [ -h $HOME/.vimrc ] ; then
+    mv $HOME/.vimrc $HOME/.vimrc.bak
 fi
 
-git clone https://github.com/h1994st/vim-conf.git ~/.vim
+git clone https://github.com/h1994st/vim-conf.git $HOME/.vim
+
+ln -s $HOME/.vim/vimrc $HOME/.vimrc
 
 # Clone Vundle.vim
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 
 # Install plugins
 vim +PluginInstall +qall
